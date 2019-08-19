@@ -5,23 +5,31 @@ use Zend\Form\Form;
 use Zend\InputFilter\FileInput;
 use Zend\InputFilter\InputFilter;
 
+// From for uploading images
 class ImageForm extends Form
 {     
     public function __construct()
     {
+        // Form name
         parent::__construct('image-form');
 
+        // Set Post method
         $this->setAttribute('method', 'post');
                 
+        // Set enctype for file uploading
         $this->setAttribute('enctype', 'multipart/form-data');
-				
+		
+        // Add elements to form		
         $this->addElements();
 
+        //Apply validation rules and filters
         $this->addInputFilter();        
     }
     
+    // Adds elements to form
     protected function addElements() 
     {
+        // File field.
         $this->add([
             'type'  => 'file',
             'name' => 'file',
@@ -32,7 +40,8 @@ class ImageForm extends Form
                 'label' => 'Image file',
             ],
         ]);        
-          
+         
+        // Submit button for upload 
         $this->add([
             'type'  => 'submit',
             'name' => 'submit',
@@ -48,6 +57,7 @@ class ImageForm extends Form
         $inputFilter = new InputFilter();   
         $this->setInputFilter($inputFilter);
     
+        // Validation rules and filters for file input
         $inputFilter->add([
                 'type'     => FileInput::class,
                 'name'     => 'file',
