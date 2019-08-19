@@ -2,6 +2,7 @@
 namespace Application\Form;
 
 use Zend\Form\Form;
+use Zend\InputFilter\FileInput;
 use Zend\InputFilter\InputFilter;
 
 class ImageForm extends Form
@@ -48,7 +49,7 @@ class ImageForm extends Form
         $this->setInputFilter($inputFilter);
     
         $inputFilter->add([
-                'type'     => 'Zend\InputFilter\FileInput',
+                'type'     => FileInput::class,
                 'name'     => 'file',
                 'required' => true,   
                 'validators' => [
