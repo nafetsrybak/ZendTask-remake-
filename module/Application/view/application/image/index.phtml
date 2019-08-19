@@ -1,7 +1,7 @@
 <h1>Image Gallery</h1>
  
 <p>
-    Эта страница отображает список выгруженных изображений.
+    This page displays the list of uploaded images.
 </p>
 
 <p>
@@ -14,7 +14,7 @@
 <?php if(count($files)==0): ?>
 
 <p>
-  <i>Нет файлов для отображения.</i>
+  <i>There are no files to display.</i>
 </p>
 
 <?php else: ?>
@@ -35,6 +35,9 @@
                 <a target="_blank" href="<?= $this->url('images', ['action'=>'file'], 
                     ['query'=>['name'=>$file]]); ?>" 
                     class="btn btn-default" role="button">Show in Natural Size</a>
+                <a href="<?= $this->url('images',  
+                        ['action'=>'delete'], ['query'=>['delete'=>$file]]); ?>" 
+                        class="btn btn-danger" role="button">Delete</a>
                 </p>
             </div>
         </div>
