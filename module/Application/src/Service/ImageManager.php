@@ -63,5 +63,29 @@ class ImageManager
             'size' => $fileSize,
             'type' => $mimeType 
         ];
+    }
+
+    public  function resizeImage($filePath, $desiredWidth = 240) 
+    {
+        list($originalWidth, $originalHeight) = getimagesize($filePath);
+
+        $aspectRatio = $originalWidth/$originalHeight;
+
+        $desiredHeight = $desiredWidth/$aspectRatio;
+
+        $fileInfo = $this->getImageFileInfo($filePath);
+        
+        $resultingImage = imagecreatetruecolor($desiredWidth, $desiredHeight);
+        if (substr($fileInfo['type'], 0, 9) =='image/png')
+            $originalImage = imagecreatefrompng($filePath);
+        else
+            $originalImage = imagecreatefromjpeg($filePath);
+        imagecopyresampled($resultingImage, $originalImage, 0, 0, 0, 0, 
+                $desiredWidth, $desiredHeight, $originalWidth, $originalHeight);
+
+        $tmpFileName = tempnam("/tmp", "FOO");
+        imagejpeg($resultingImage, $tmpFileName, 80);
+        
+        return $tmpFileName;
     } 
 }
