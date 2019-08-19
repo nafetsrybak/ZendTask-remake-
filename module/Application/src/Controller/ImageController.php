@@ -86,5 +86,27 @@ class ImageController extends AbstractActionController
         }
         
         return $this->getResponse();
+    }
+
+    public function deleteAction() 
+    {
+        // Get the file name from GET variable
+        $fileName = $this->params()->fromQuery('delete', '');
+
+        // Validate input parameters
+        if (empty($fileName) || strlen($fileName)>128) {
+            throw new \Exception('File name is empty or too long');
+        }
+
+        $fileName = $this->imageManager->getImagePathByName($fileName);
+
+        if(!file_exists($fileName)){
+            $this->getResponse()->setStatusCode(404);            
+            return;
+        }
+
+        unlink($fileName);
+
+        return $this->redirect()->toRoute('images');
     }     
 }
