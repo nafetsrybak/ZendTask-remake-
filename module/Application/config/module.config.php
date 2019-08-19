@@ -38,8 +38,13 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\IndexController::class => InvokableFactory::class
         ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            Service\ImageManager::class => InvokableFactory::class,            
+        ]
     ],
     'view_manager' => [
         'display_not_found_reason' => true,
