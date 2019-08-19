@@ -15,11 +15,39 @@ class ImageController extends AbstractActionController
     }
   
     public function indexAction() 
-    {                
+    {
+        $files = $this->imageManager->getSavedFiles();
+        
+        return new ViewModel([
+            'files'=>$files
+        ]);
     }
     
     public function uploadAction() 
     {
+        $form = new ImageForm();
+        
+        if($this->getRequest()->isPost()) {
+            
+            $request = $this->getRequest();
+            $data = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray()
+            );
+            
+            $form->setData($data);
+            
+            if($form->isValid()) {
+                
+                $data = $form->getData();
+                
+                return $this->redirect()->toRoute('images');
+            }                        
+        } 
+        
+        return new ViewModel([
+                     'form' => $form
+                 ]);
     }
         
     public function fileAction() 
